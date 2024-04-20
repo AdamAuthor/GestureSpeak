@@ -24,8 +24,8 @@ func NewHandler(log logger.Logger, srv *service.Service) *Handler {
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
+	//gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
-
 	auth := router.Group("/auth")
 	{
 		auth.POST("/sign-up", h.signUp)
