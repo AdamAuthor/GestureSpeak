@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GestureSpeak</title>
+    <link rel="stylesheet" href="/web/src/styles/styles.css">
+</head>
+
+<body>
+<form id="videoForm" enctype="multipart/form-data">
+    <div class="file-upload">
+        <div class="image-upload-wrap">
+            <input id="videoInput" class="file-upload-input" type='file' accept="video/*" />
+            <div class="drag-text">
+                <h3>Drag and drop a file or click here to choose file</h3>
+            </div>
+        </div>
+        <div class="file-upload-content">
+            <img class="file-upload-image" src="/web/src/img/logo.png"/>
+            <div class="image-title-wrap">
+                <button type="button" id="removeBtn" class="remove-image">Remove <span class="image-title">Uploaded Video</span></button>
+                <button type="submit" class="file-upload-btn">Upload Video</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="/web/src/scripts/script.js"></script>
+</body>
+</html>

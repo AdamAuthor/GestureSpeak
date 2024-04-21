@@ -1,10 +1,9 @@
 package handler
 
 import (
-	"todoApp/internal/service"
-	"todoApp/pkg/logger"
-
 	"github.com/gin-gonic/gin"
+	"net/http"
+	"todoApp/internal/service"
 )
 
 const (
@@ -12,13 +11,11 @@ const (
 )
 
 type Handler struct {
-	log     logger.Logger
 	service *service.Service
 }
 
-func NewHandler(log logger.Logger, srv *service.Service) *Handler {
+func NewHandler(srv *service.Service) *Handler {
 	return &Handler{
-		log:     log,
 		service: srv,
 	}
 }
@@ -26,10 +23,22 @@ func NewHandler(log logger.Logger, srv *service.Service) *Handler {
 func (h *Handler) InitRoutes() *gin.Engine {
 	//gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
+
+	router.LoadHTMLGlob("web/public/*")
+	router.Static("/web", "./web/")
+
+	router.GET("/", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", nil)
+	})
+
 	auth := router.Group("/auth")
 	{
 		auth.POST("/sign-up", h.signUp)
 		auth.POST("/sign-in", h.signIn)
+	}
+	api := router.Group("/api")
+	{
+		api.POST("/upload-video", h.uploadVideo)
 	}
 
 	return router

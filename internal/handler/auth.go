@@ -1,6 +1,7 @@
 package handler
 
 import (
+	log "github.com/sirupsen/logrus"
 	"net/http"
 	"todoApp/internal/models"
 
@@ -11,13 +12,13 @@ func (h *Handler) signUp(c *gin.Context) {
 	var user models.User
 
 	if err := c.BindJSON(&user); err != nil {
-		h.log.Error(err.Error())
+		log.Error(err.Error())
 		c.AbortWithStatusJSON(http.StatusBadRequest, models.ErrorResponse{Message: err.Error()})
 		return
 	}
 	id, err := h.service.Authorization.CreateUser(user)
 	if err != nil {
-		h.log.Error(err.Error())
+		log.Error(err.Error())
 		c.AbortWithStatusJSON(http.StatusInternalServerError, models.ErrorResponse{Message: err.Error()})
 		return
 	}
@@ -31,13 +32,13 @@ func (h *Handler) signIn(c *gin.Context) {
 	var signIn models.SignInInput
 
 	if err := c.BindJSON(&signIn); err != nil {
-		h.log.Error(err.Error())
+		log.Error(err.Error())
 		c.AbortWithStatusJSON(http.StatusBadRequest, models.ErrorResponse{Message: err.Error()})
 		return
 	}
 	token, err := h.service.Authorization.GenerateToken(signIn.Username, signIn.Password)
 	if err != nil {
-		h.log.Error(err.Error())
+		log.Error(err.Error())
 		c.AbortWithStatusJSON(http.StatusInternalServerError, models.ErrorResponse{Message: err.Error()})
 		return
 	}
