@@ -1,4 +1,0 @@
-[31mFATA[0m[2024-04-20T19:18:38+05:00]main.go:27 main.main() error with loading env files: open .env: no such file or directory 
-[31mFATA[0m[2024-04-20T19:19:28+05:00]main.go:40 main.main() failed to initialize db: pq: database "todo" does not exist 
-[31mFATA[0m[2024-04-21T01:16:27+05:00]main.go:40 main.main() failed to initialize db: dial tcp [::1]:5432: connect: connection refused 
-[31mFATA[0m[2024-04-21T01:17:04+05:00]main.go:40 main.main() failed to initialize db: dial tcp [::1]:5432: connect: connection refused 

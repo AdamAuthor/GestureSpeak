@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"todoApp/internal/service"
+	"todoApp/pkg/cloudflare"
 )
 
 const (
@@ -11,12 +12,14 @@ const (
 )
 
 type Handler struct {
-	service *service.Service
+	service   *service.Service
+	s3Service *cloudflare.S3Service
 }
 
-func NewHandler(srv *service.Service) *Handler {
+func NewHandler(srv *service.Service, s3srv *cloudflare.S3Service) *Handler {
 	return &Handler{
-		service: srv,
+		service:   srv,
+		s3Service: s3srv,
 	}
 }
 

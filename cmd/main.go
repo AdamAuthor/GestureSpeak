@@ -8,6 +8,7 @@ import (
 	"todoApp/internal/handler"
 	"todoApp/internal/repository"
 	"todoApp/internal/service"
+	"todoApp/pkg/cloudflare"
 	"todoApp/pkg/postgres"
 	"todoApp/pkg/server"
 
@@ -39,9 +40,14 @@ func main() {
 		log.Fatalf("failed to initialize db: %s", err.Error())
 	}
 
+	s3Service, err := cloudflare.NewR2Service()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	repo := repository.NewRepository(db)
 	services := service.NewService(repo)
-	handlers := handler.NewHandler(services)
+	handlers := handler.NewHandler(services, s3Service)
 
 	srv := new(server.Server)
 	err = srv.Run(viper.GetString("port"), handlers.InitRoutes())
