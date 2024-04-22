@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"io"
 	"net/http"
+	"os"
 	"time"
 	"todoApp/internal/models"
 )
@@ -58,5 +59,18 @@ func (h *Handler) uploadVideo(c *gin.Context) {
 
 	err = h.service.UploadVideo.CreateVideoFile(video)
 
+	defer func() {
+		if err := deleteLocalFile(dst); err != nil {
+			fmt.Println("Failed to delete local file:", err)
+		}
+	}()
+
 	c.JSON(http.StatusOK, gin.H{"message": "Video uploaded successfully"})
+}
+
+func deleteLocalFile(filePath string) error {
+	if err := os.Remove(filePath); err != nil {
+		return err
+	}
+	return nil
 }
